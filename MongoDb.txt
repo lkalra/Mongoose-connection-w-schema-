@@ -1,0 +1,46 @@
+install mongo as a service - open cmd
+
+check for versions 
+"C:\Program Files\MongoDB\Server\5.0\bin\mongod.exe" --version
+
+"C:\Program Files\MongoDB\Server\5.0\bin\mongo.exe" --version
+
+start mongo
+"C:\Program Files\MongoDB\Server\5.0\bin\mongo.exe"
+
+to start mongo easily will need to add path through environment variable thn path thn new now can run mongo by - mongo
+
+
+to see databases - show dbs
+create db/start working in db - use _DbName
+but new db will show only if we have 1 collection in db
+db.data.insertOne() or insertMany()({name:"react", type:"Fe", videos:80, active:true}) - will return id and acknowledged & creates collection as data and 1 document in it
+now show dbs will show created db
+db will show current db
+cls will clear console 
+
+show collections will show collections in db
+db.data.find() will show data in collection
+db.data.find().pretty() will show data in collection in good format
+db.data.find({name:"react"}).pretty() will show specific data/document in collection 
+db.data.find({name:"react"}, {name:1}).pretty() will show specific data/document in collection that too only 1 field only name not type/videos/active but with id
+db.data.find({name:"react"}, {_id:0, name:1}).pretty() will show specific data/document in collection that too only 1 field only name not type/videos/active but without id
+db.data.find({active:"true"}).pretty().limit(1) or db.data.findOne({active:"true"}) will show first document with active value true 1 is chanagable in limit para.
+db.data.find({active:"true"}).pretty().limit(1).skip(1) will show the first encountered document with active value but by skipping first document so logically second.
+
+db.data.updateOne({name:"react"}, {$set:{type:"Frontend"}}) or updateMany() will update the type of first encountered document with name react
+
+db.data.deleteMany({type:"Frontend"}) will delete every document having type frontend
+db.data.deleteMany({}) will delete every document in collection(data)
+
+
+to connect db in compass start mongo in cmd by - mongo thn connect in compass
+to do crud in compass go to collections you'll see available documents
+create by add data thn document update by press pencil key on right side read by going on filter thn {name:"react"} delete by presseng delete key on right side
+
+
+
+
+
+
+

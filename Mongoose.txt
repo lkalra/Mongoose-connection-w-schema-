@@ -1,0 +1,103 @@
+helps in restablishing connection b/w node and mongo
+
+create _file in src folder which is in project folder open project folder as terminal
+npm init -y will not need to fill the details
+npm i mongoose
+check node version - node -v
+require mongoose in _file - const mongoose = require("mongoose")
+mongoose.connect("mongodb://localhost:27017/register",{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}).then(()=>console.log("successfull")).catch((err)=>console.log("failed")); - will enter in register collection or if not present will create it.
+can run this file node src/_file will keep checking and adding functions like above useNewUrlParser: true //works as promise 
+
+//schema - defines structure of the document
+const listSchema=new mongoose.Schema({
+	name: {
+		type: String,
+		required: true,
+		lowercase: true  //validation will save name as lowercase only
+	}
+	ctype: String,
+	videos:{
+		type:Number,
+		validate(value){ //custom validator
+			if(value<0){
+				console.log("canot be negative")
+			}
+		} 
+	},	
+	author: String,
+	active: Boolean,
+	date:{
+		type: Date,
+		default: Date.now
+	}
+})
+
+//models - helps in creating collections - behaves as a class
+const List=new mongoose.model("Playlist", listSchema) //if List does not work change it as Playlist everywhere
+
+//creating document
+const createDoc = async () => {
+	try{
+		const reactList = new Playlist({
+			name: "react"
+			ctype: "Fe"
+			videos: 80
+			author: Lk
+			active: true
+		})
+
+		const result = await reactList.save() or await List.insertMany([]) - if you want to create single document of multiple to create multiple pass document name in array[reactList, ..., ...] if singlr just do simple save
+		console.log(result)
+	}catch(err){
+		console.log(err)
+	}
+}
+
+createDoc();
+
+
+
+const getDoc = async () => {
+	try{
+		const result = await List.find() or to search for any filter find({ctype; 		"Fe"}) thn if you want to see only name of fe types chain the 		method .select({name:1}) if to see only one .limit(1)
+		console.log(result)
+	}catch(err){
+		console.log(err)
+	}
+can use .find({videos: {$gte: 50}}) will show the documents having videos greater and equal to 50 ($gte is operator) & .countDocuments() shows number of document to sort documents .sort({name: 1 or -1}) 1 here means ascen order
+}
+
+getDoc();
+
+
+
+const updateDoc =  async (_id) => {
+	try{
+		const result= await List.findByIdAndUpdate({_id},{
+			$set:{
+				name: "Javascript"
+			},{
+				new: true, //shows the updated value in console when we'll do node src/app.js
+				useFindAndModify: false
+			}
+		})
+		console.log(result)
+	}catch(err){
+		console.log(err)
+	}
+}
+
+updateDoc("id of specific document")
+
+
+
+const deleteDoc = async(_id) => {
+	try{
+		const result = await List.findByIdAndDelete({_id})
+		console.log(result)
+	}catch(err){
+		console.log(err)
+	}
+}
+
+deleteDoc("id of specific document")
